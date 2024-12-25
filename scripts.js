@@ -4,9 +4,16 @@ function radian_to_deg(radians){
 
 let time = new Date();
 let year = time.getFullYear();
-const christmas = new Date("Dec 25," + year +" 0:00:00");
+let christmas = new Date("Dec 25," + year +" 0:00:00");
 let time_until = christmas-time;
 
+if (time_until < 0){
+    year ++;
+    
+    christmas = new Date("Dec 25," + year +" 0:00:00");
+    time_until = christmas-time;
+
+}
 let start_time = Math.random();
 let pos = Math.random();
 
@@ -40,18 +47,13 @@ for (let i=0; i<flakes; i++){
     css_snow.push(document.querySelector("#snow" + i));
     css_snow[i].style.setProperty("--delay", start_time + "s");
 }
-
-if ((christmas - time) < 0){
-    year ++;
-    const christmas = new Date("Dec 24," + year +" 23:59:59");
-}
     
-
 function update_time(){
     time = new Date();
     time_until = christmas-time;
-    let months = Math.floor(time_until/259200000);
-    time_until -= months * 259200000;
+    let months = Math.floor(time_until/2629746000);
+    time_until -= months * 2629746000;
+    
     let days = Math.floor(time_until/86400000);
     time_until -= days * 86400000;
     let hours = Math.floor(time_until/3600000);
@@ -103,7 +105,6 @@ function randomize_shooting_star(){
 
     }
 
-    console.log(dist*0.05);
     shooting_star.style.setProperty("--start-x", shooting_star_startx + "vmax");
     shooting_star.style.setProperty("--start-y", shooting_star_starty + "vmax");
     shooting_star.style.setProperty("--end-x", shooting_star_endx + "vmax");
